@@ -35,8 +35,11 @@ case HIGH/* constant-expression */:
   case LOW:
   digitalWrite (myled,HIGH);
 
-default:
+
   break;
+
+  
+
 }
 
 

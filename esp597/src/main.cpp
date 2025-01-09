@@ -1,18 +1,28 @@
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+//선언한다 15핀은 myled 선언  15핀을 사용 한다
+#define myled 15
+
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  
+//led 설정한 핀을 출력으로 설정할것
+ pinMode(myled,OUTPUT);
+
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+ 
+//led 켠다 
+//1초쉰다
+//led 끈다
+//1쉰다
+digitalWrite(myled,HIGH);
+delay(1000);
+digitalWrite(myled,LOW);
+delay(1000);
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+
+
+
 }

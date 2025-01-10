@@ -16,10 +16,8 @@ void loop() {
 
 
   Serial.println("나는 사랑 스럽다");
-  delay(1000);
-
-
-
+  delay(100);
+  
 }
 
 

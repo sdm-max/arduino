@@ -1,10 +1,14 @@
 // 파이썬 데이터를 역직령화 하기 위한 라이브러리
 #include <ArduinoJson.h>
 
+#define LED1 2 // LED 1번 핀 디지털 2번핀에 연결함
+#define LED2 3 // LED 2번 핀 디지털 3번핀에 연결함
 void setup() {
   //파이썬과 통신 속도는 9600으로 설정
   Serial.begin(9600);
-
+  //LED가 연결된 핀의 방향을 설정한다
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
 }
 
 void loop() {
@@ -25,28 +29,47 @@ void loop() {
     
     // 파이썬쪽에서 json 규칙에 위배되는 데이터를 보내면 에러를 출력
     // 파싱 오류 확인
-  if (error) {
-    Serial.print(F("deserializeJson() failed: "));
-    Serial.println(error.f_str());
-    return;
-  }
+  // 역직렬화 오류가 발생했는지 확인
+    if (error) {
+      Serial.print(F("deserializeJson() failed: "));
+      Serial.println(error.f_str());
+      return;
+    }
 
     // 원문 myjson = {"key1":"value1","key2":"value2","key3":"value3"}
     // 역설겨된 myjson을 doc에 대입하면 아래처럼 사용가능
-  String key1 = doc["key1"]; // "value1"
-  String key2 = doc["key2"]; // "value2"
-  String key3 = doc["key3"]; // "value3"
+    int led_num = doc["led_num"]; // 1
+    int state = doc["state"]; // 0
 
-    // 추출한 값 출력
-    Serial.print("key1=");
-    Serial.print(key1);
-    Serial.print(",key2=");
-    Serial.print(key2);
-    Serial.print(",key3=");
-    Serial.print(key3);
-    Serial.println();
-
-
+    if(led_num == 0){
+      //모든 led 제어하기
+      if(state == 0){
+        //끄기
+        digitalWrite(LED1,LOW);
+        digitalWrite(LED2,LOW);
+      }else if(state == 1){
+        //켜기
+        digitalWrite(LED1,HIGH);
+        digitalWrite(LED2,HIGH);
+      }
+    }else if(led_num == 1){
+      //led 1번 제어하기
+      if(state == 0){
+        //끄기
+        digitalWrite(LED1,LOW);
+      }else if(state == 1){
+        //켜기
+        digitalWrite(LED1,HIGH);
+      }
+    }else if(led_num == 2){
+      //led 2번 제어하기
+      if(state == 0){
+        //끄기
+        digitalWrite(LED2,LOW);
+      }else if(state == 1){
+        //켜기
+        digitalWrite(LED2,HIGH);
+      }
+    }    
   }
 }
-
